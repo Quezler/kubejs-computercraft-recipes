@@ -8,29 +8,26 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      # download server
+      # step 0
       - run: wget https://media.forgecdn.net/files/3725/641/Enigmatica6ExpertServer-1.1.2.zip
       - run: ls
-
-      # unzip server
       - run: unzip *.zip
       - run: ls
 
-      # install server
+      # step 1
       - uses: actions/setup-node@v3
       - uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '11'
       - run: echo "eula=true" >> eula.txt 
-      - run: node install-server.js
+      - run: node ./step-1.js
       - run: ls
 
-      # extract debug
+      # step 2
       - run: sed -i'' -e 's/debugInfo=false/debugInfo=true/g' kubejs/config/common.properties
-      - run: node ./debug-server.js
+      - run: node ./step-2.js
       - run: sed -i'' -e 's/debugInfo=true/debugInfo=false/g' kubejs/config/common.properties
-
       - uses: actions/upload-artifact@v3
         with:
           name: latest.log
@@ -40,9 +37,14 @@ jobs:
           name: kubejs-server-export.json
           path: ./kubejs/exported/kubejs-server-export.json
 
+      # step 3
       - run: npm install lua-json
-      - run: node treasure_disks.js
+      - run: node step-3.js
       - uses: actions/upload-artifact@v3
         with:
-          name: recipes.zip
-          path: ./kubejs/data/computercraft/lua/treasure/kubejs/recipes/
+          name: recipes.json
+          path: ./kubejs/data/computercraft/lua/treasure/kubejs/recipes/recipes.json
+      - uses: actions/upload-artifact@v3
+        with:
+          name: recipes.lua
+          path: ./kubejs/data/computercraft/lua/treasure/kubejs/recipes/recipes.lua
