@@ -10,10 +10,12 @@ child.stdout.on('data', (data) => {
     }
 
     if(`${data}`.includes('[minecraft/DedicatedServer]: Done! Export in kubejs/exported/kubejs-server-export.json')) {
+        child.kill(15);
         process.exit(0);
     }
 
     if(`${data}`.includes('Server will restart in ~10 seconds') || `${data}`.includes('Failed to start the minecraft server') || `${data}`.endsWith('Exception stopping the server')) {
+        child.kill(9);
         process.exit(1);
     }
 });
