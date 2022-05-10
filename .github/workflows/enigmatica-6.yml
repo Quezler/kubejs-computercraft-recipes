@@ -30,18 +30,19 @@ jobs:
       - run: sed -i'' -e 's/debugInfo=false/debugInfo=true/g' kubejs/config/common.properties
       - run: node ./debug-server.js
       - run: sed -i'' -e 's/debugInfo=true/debugInfo=false/g' kubejs/config/common.properties
-      - run: cat ./logs/latest.log
-      - run: cat ./kubejs/exported/kubejs-server-export.json
 
       - uses: actions/upload-artifact@v3
         with:
+          name: latest.log
           path: ./logs/latest.log
       - uses: actions/upload-artifact@v3
         with:
+          name: kubejs-server-export.json
           path: ./kubejs/exported/kubejs-server-export.json
 
       - run: npm install lua-json
       - run: node treasure_disks.js
       - uses: actions/upload-artifact@v3
         with:
+          name: recipes.zip
           path: ./kubejs/data/computercraft/lua/treasure/kubejs/recipes/
