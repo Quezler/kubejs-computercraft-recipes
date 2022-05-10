@@ -39,3 +39,9 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           path: ./kubejs/exported/kubejs-server-export.json
+
+      - run: npm install lua-json
+      - run: node treasure_disks.js
+      - uses: actions/upload-artifact@v3
+        with:
+          path: ./kubejs/data/computercraft/lua/treasure/kubejs/recipes/
