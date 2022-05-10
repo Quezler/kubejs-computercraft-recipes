@@ -6,7 +6,7 @@ child.stdout.on('data', (data) => {
   process.stdout.write(`${data}`);
 
   if(`${data}`.includes('Starting Loader, output incoming')) {
-    process.exit(1);
+    process.exit(0);
   }
 });
 
