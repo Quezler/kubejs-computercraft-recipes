@@ -7,5 +7,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
+      # download server
       - run: wget https://media.forgecdn.net/files/3725/640/Enigmatica6Expert-1.1.2.zip
+      - run: ls
+
+      # unzip server
+      - run: unzip *.zip
       - run: ls
