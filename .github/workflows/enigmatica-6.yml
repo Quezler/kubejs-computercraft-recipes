@@ -32,3 +32,10 @@ jobs:
       - run: sed -i'' -e 's/debugInfo=true/debugInfo=false/g' kubejs/config/common.properties
       - run: cat ./logs/latest.log
       - run: cat ./kubejs/exported/kubejs-server-export.json
+
+      - uses: actions/upload-artifact@v3
+        with:
+          path: ./logs/latest.log
+      - uses: actions/upload-artifact@v3
+        with:
+          path: ./kubejs/exported/kubejs-server-export.json
