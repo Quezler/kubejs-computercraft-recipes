@@ -7,8 +7,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        1: [1, 2, 3, 4]
-        2: [1, 2, 3, 4]
+        1: [1, 2, 3, 4, 5]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -25,12 +24,12 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '11'
-      - run: echo "eula=true" >> eula.txt 
       - run: node ./step-1.js
       - run: ls
 
       # step 2
       - run: sed -i'' -e 's/debugInfo=false/debugInfo=true/g' kubejs/config/common.properties
+      - run: echo "eula=true" >> eula.txt 
       - run: node ./step-2.js
       - run: sed -i'' -e 's/debugInfo=true/debugInfo=false/g' kubejs/config/common.properties
       - uses: actions/upload-artifact@v3
